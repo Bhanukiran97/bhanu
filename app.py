@@ -10,31 +10,32 @@ import uvicorn
 import pandas as pd
 import streamlit as st
 from datetime import date
-import yfinance as yf
+import nsepy as ns
 from prophet import Prophet
 from prophet.plot import plot_plotly
 from plotly import graph_objs as go
 
 
 
-START = "2015-01-01"
-TODAY = date.today().strftime("%Y-%m-%d")
+
+now = date.today().strftime("%Y-%m-%d")
 
 st.title('Stock Forecast App')
 
-stocks = ('GOOG', 'AAPL', 'MSFT', 'GME')
+stocks = ('INFY', 'WIPRO', 'RELIANCE', 'TATAMOTORS')
 selected_stock = st.selectbox('Select dataset for prediction', stocks)
 
-n_years = st.slider('Years of prediction:', 1, 4)
+n_years = st.slider('Years of prediction:', 1, 2)
 period = n_years * 365
 
 
 @st.cache
 def load_data(ticker):
-    data = yf.download(ticker, START, TODAY)
+    data = yf.download(symbol = "INFY", start = date(2012,10,1), end = now)
+    data.drop(['Symbol', 'Series', 'Prev Close', 'Last', 'VWAP', 'Turnover', 'Trades', 
+               'Deliverable Volume','%Deliverble'],  axis = 1, inplace = True)
+    pd.DatetimeIndex(data.index, inplace = True)
     data.reset_index(inplace=True)
-    data['Date'] = data['Date'].apply(lambda x: x.date())
-    data['Date']=pd.to_datetime(data['Date'])
     return data
 
 	
@@ -66,7 +67,7 @@ forecast = m.predict(future)
 
 # Show and plot forecast
 st.subheader('Forecast data')
-st.write(forecast.tail())
+st.write(forecast.head())
     
 st.write(f'Forecast plot for {n_years} years')
 fig1 = plot_plotly(m, forecast)
