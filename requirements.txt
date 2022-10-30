@@ -4,3 +4,9 @@ streamlit==1.2.0
 streamlit-option-menu==0.3.2
 scikit-learn==1.0.1
 protobuf==3.20.1
+uvicorn
+yfinance
+prophet
+datetime
+plotly
+pandas
