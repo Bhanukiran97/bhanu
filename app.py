@@ -31,7 +31,7 @@ period = n_years * 365
 
 @st.cache
 def load_data(ticker):
-    data = yf.download(symbol = "INFY", start = date(2012,10,1), end = now)
+    data = ns.get_history(symbol = "INFY", start = date(2012,10,1), end = now)
     data.drop(['Symbol', 'Series', 'Prev Close', 'Last', 'VWAP', 'Turnover', 'Trades', 
                'Deliverable Volume','%Deliverble'],  axis = 1, inplace = True)
     pd.DatetimeIndex(data.index, inplace = True)
