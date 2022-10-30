@@ -18,7 +18,7 @@ from plotly import graph_objs as go
 
 
 
-now = date.today().strftime("%Y-%m-%d")
+now = date.today()
 
 st.title('Stock Forecast App')
 
