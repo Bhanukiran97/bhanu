@@ -28,7 +28,7 @@ period = n_months * 30
 
 @st.cache
 def load_data(ticker):
-    data = ns.get_history(symbol = "INFY", start = date(2012,10,1), end = date.today())
+    data = ns.get_history(symbol = ticker, start = date(2012,10,1), end = date.today())
     data.drop(['Symbol', 'Series', 'Prev Close', 'Last', 'VWAP', 'Turnover', 'Trades', 
                'Deliverable Volume','%Deliverble'],  axis = 1, inplace = True)
     data.reset_index(inplace=True)
